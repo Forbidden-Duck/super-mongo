@@ -30,8 +30,6 @@ module.exports.MaxKey = bson.MaxKey;
 
 module.exports.MinKey = bson.MinKey;
 
-module.exports.Null = null;
-
 module.exports.Object = Object;
 
 module.exports.ObjectID = bson.ObjectID;
@@ -39,5 +37,3 @@ module.exports.ObjectID = bson.ObjectID;
 module.exports.String = String;
 
 module.exports.Timestamp = bson.Timestamp;
-
-module.exports.Undefined = undefined;
