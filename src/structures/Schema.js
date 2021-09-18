@@ -3,11 +3,11 @@ const datatypes = require("../datatypes");
 /**
  * Converts an object into a schema
  * @template {string} K
- * @template {Array | datatypes.BSONRegExp | datatypes.BSONSymbol
+ * @template {datatypes.JSArray | datatypes.BSONRegExp | datatypes.BSONSymbol
  * | datatypes.BSONBinary | datatypes.BSONBinary | Boolean | datatypes.BSONCode
  * | Date | datatypes.BSONDecimal128 | datatypes.BSONDouble | datatypes.BSONInt32
  * | Number | datatypes.BSONLong | datatypes.BSONMaxKey | datatypes.BSONMinKey | null
- * | Object | datatypes.BSONObjectID | String | datatypes.BSONTimestamp
+ * | Object | datatypes.JSObject |datatypes.BSONObjectID | String | datatypes.BSONTimestamp
  * | undefined} V
  * @template {Object<K, V>} S
  */
@@ -68,7 +68,7 @@ class Schema {
                 type instanceof datatype ||
                 type === null ||
                 type === undefined ||
-                ["boolean", "number", "object", "string"].includes(typeof type)
+                ["boolean", "number", "string"].includes(typeof type)
             ) {
                 return true;
             }

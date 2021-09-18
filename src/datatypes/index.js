@@ -1,5 +1,7 @@
 const bson = require("bson");
 
+module.exports.JSArray = Array;
+
 module.exports.BSONRegExp = bson.BSONRegExp;
 
 module.exports.BSONSymbol = bson.BSONSymbol;
@@ -21,6 +23,8 @@ module.exports.BSONLong = bson.Long;
 module.exports.BSONMaxKey = bson.MaxKey;
 
 module.exports.BSONMinKey = bson.MinKey;
+
+module.exports.JSObject = Object;
 
 module.exports.BSONObjectID = bson.ObjectID;
 
