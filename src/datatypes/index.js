@@ -2,15 +2,15 @@ const bson = require("bson");
 
 module.exports.Array = Array;
 
-module.exports.Binary = bson.Binary;
-
-module.exports.Boolean = Boolean;
-
 module.exports.BSONRegExp = bson.BSONRegExp;
 
 module.exports.BSONSymbol = bson.BSONSymbol;
 
 module.exports.BSONMap = bson.Map;
+
+module.exports.Binary = bson.Binary;
+
+module.exports.Boolean = Boolean;
 
 module.exports.Code = bson.Code;
 
