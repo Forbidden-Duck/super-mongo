@@ -18,11 +18,12 @@ class Schema {
      */
     constructor(obj) {
         /**
+         * @private
          * @type {S}
          */
         this._props = {};
         for (const [key, value] of Object.entries(obj)) {
-            this.setProp(key, value);
+            this._setProp(key, value);
         }
     }
 
@@ -44,10 +45,11 @@ class Schema {
 
     /**
      * Set the type under the key
+     * @private
      * @param {K} key
      * @param {V} type
      */
-    setProp(key, type) {
+    _setProp(key, type) {
         if (this.validType(type)) {
             this._props[key] = type;
         } else {
