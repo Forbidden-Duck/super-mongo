@@ -11,5 +11,8 @@ module.exports.create = (sha = "SHA256") => {
     ) {
         throw new TypeError("Invalid SHA method");
     }
-    return cryptojs[sha](str).toString();
+    const random = (
+        Math.floor(Math.random() * 999999999) + new Date().getTime()
+    ).toString();
+    return cryptojs[sha](random).toString();
 };
