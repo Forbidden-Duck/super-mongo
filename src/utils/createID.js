@@ -5,7 +5,7 @@ const cryptojs = require("crypto-js");
  * @param {"SHA1" | "SHA224" | "SHA256" | "SHA3" | "SHA384" | "SHA512"} [sha=] SHA256 is default
  * @returns {string}
  */
-module.exports = (sha = "SHA256") => {
+module.exports.create = (sha = "SHA256") => {
     if (
         !["SHA1", "SHA224", "SHA256", "SHA3", "SHA384", "SHA512"].includes(sha)
     ) {
