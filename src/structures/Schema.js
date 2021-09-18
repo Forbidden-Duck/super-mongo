@@ -65,10 +65,10 @@ class Schema {
     validType(type) {
         for (const datatype of Object.values(datatypes)) {
             if (
-                type instanceof datatype ||
+                type === datatype ||
                 type === null ||
                 type === undefined ||
-                ["boolean", "number", "string"].includes(typeof type)
+                ["boolean", "number", "object", "string"].includes(typeof type)
             ) {
                 return true;
             }
