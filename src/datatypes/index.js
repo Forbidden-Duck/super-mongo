@@ -1,6 +1,6 @@
 const bson = require("bson");
 
-module.exports.Array = Array;
+module.exports.JSArray = Array;
 
 module.exports.BSONRegExp = bson.BSONRegExp;
 
@@ -8,32 +8,32 @@ module.exports.BSONSymbol = bson.BSONSymbol;
 
 module.exports.BSONMap = bson.Map;
 
-module.exports.Binary = bson.Binary;
+module.exports.BSONBinary = bson.Binary;
 
-module.exports.Boolean = Boolean;
+module.exports.JSBoolean = Boolean;
 
-module.exports.Code = bson.Code;
+module.exports.BSONCode = bson.Code;
 
-module.exports.Date = Date;
+module.exports.JSDate = Date;
 
-module.exports.Decimal128 = bson.Decimal128;
+module.exports.BSONDecimal128 = bson.Decimal128;
 
-module.exports.Double = bson.Double;
+module.exports.BSONDouble = bson.Double;
 
-module.exports.Int32 = bson.Int32;
+module.exports.BSONInt32 = bson.Int32;
 
-module.exports.Int64 = Number;
+module.exports.JSInt64 = Number;
 
-module.exports.Long = bson.Long;
+module.exports.BSONLong = bson.Long;
 
-module.exports.MaxKey = bson.MaxKey;
+module.exports.BSONMaxKey = bson.MaxKey;
 
-module.exports.MinKey = bson.MinKey;
+module.exports.BSONMinKey = bson.MinKey;
 
-module.exports.Object = Object;
+module.exports.JSObject = Object;
 
-module.exports.ObjectID = bson.ObjectID;
+module.exports.BSONObjectID = bson.ObjectID;
 
-module.exports.String = String;
+module.exports.JSString = String;
 
-module.exports.Timestamp = bson.Timestamp;
+module.exports.BSONTimestamp = bson.Timestamp;
