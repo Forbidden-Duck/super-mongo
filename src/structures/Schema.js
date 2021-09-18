@@ -50,7 +50,7 @@ class Schema {
      * @param {V} type
      */
     _setProp(key, type) {
-        if (this.validType(type)) {
+        if (this._validType(type)) {
             this._props[key] = type;
         } else {
             throw new TypeError("Provided type isn't valid");
@@ -59,10 +59,11 @@ class Schema {
 
     /**
      * Validate the type
+     * @private
      * @param {V} type
      * @returns {boolean}
      */
-    validType(type) {
+    _validType(type) {
         for (const datatype of Object.values(datatypes)) {
             if (
                 type === datatype ||
