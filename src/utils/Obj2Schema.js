@@ -11,7 +11,7 @@ module.exports.compare = (obj, schema, options) => {
     for (const [key, value] of Object.entries(data)) {
         if (
             !schema[key] ||
-            (!(data[key] instanceof this.schema[key]) &&
+            (!(data[key] instanceof schema[key]) &&
                 !Collection.checkTypePrimitive(data[key], schema[key]) &&
                 ![null, undefined].includes(data[key])) ||
             (data[key] === undefined && options.noUndefined) ||
