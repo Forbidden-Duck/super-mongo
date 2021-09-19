@@ -3,9 +3,7 @@ const datatypes = require("../datatypes");
 module.exports.checkType = (type) => {
     for (const datatype of Object.values(datatypes)) {
         // Force types to be equal to datatypes
-        if (type === datatype) {
-            return true;
-        }
+        if (type === datatype) return true;
     }
     return false;
 };
