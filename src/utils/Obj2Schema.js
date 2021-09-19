@@ -2,10 +2,11 @@
  * Compare and force an obj to follow the schema rules
  * @param {object} obj
  * @param {object} schema
- * @param {{ noUndefined: boolean, noNull: boolean }} options
+ * @param {{ noUndefined: boolean, noNull: boolean }} [options]
  * @returns
  */
 module.exports.compare = (obj, schema, options) => {
+    options = typeof options === "object" ? options : {};
     const data = Object.assign({}, obj);
     for (const [key, value] of Object.entries(data)) {
         if (
