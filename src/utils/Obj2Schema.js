@@ -2,8 +2,9 @@ const Types = require("./Types");
 
 /**
  * Compare and force an obj to follow the schema rules
- * @param {object} obj
- * @param {object} schema
+ * @template {object} T
+ * @param {T} obj
+ * @param {T} schema
  * @param {{ noUndefined: boolean, noNull: boolean }} [options]
  * @returns
  */
