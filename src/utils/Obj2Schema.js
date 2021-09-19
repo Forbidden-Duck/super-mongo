@@ -1,3 +1,5 @@
+const Types = require("./Types");
+
 /**
  * Compare and force an obj to follow the schema rules
  * @param {object} obj
@@ -12,7 +14,7 @@ module.exports.compare = (obj, schema, options) => {
         if (
             !schema[key] ||
             (!(data[key] instanceof schema[key]) &&
-                !Collection.checkTypePrimitive(data[key], schema[key]) &&
+                !Types.checkType2Primitives(data[key], schema[key]) &&
                 ![null, undefined].includes(data[key])) ||
             (data[key] === undefined && options.noUndefined) ||
             (data[key] === null && options.noNull)

@@ -7,3 +7,5 @@ module.exports.ID = require("./ID");
 module.exports.Obj2Schema = require("./Obj2Schema");
 
 module.exports.Token = require("./Token");
+
+module.exports.Types = require("./Types");
