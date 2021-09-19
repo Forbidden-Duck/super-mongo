@@ -21,6 +21,12 @@ module.exports.checkType2Primitives = (value, type) => {
         case datatypes.JSObject:
             return !!value && value.constructor === datatypes.JSObject;
         default:
+            // Check if the type itself is a primitive Array of Object
+            if (datatypes.JSArray.isArray(type)) {
+                return datatypes.JSArray.isArray(value);
+            } else if (!!type && type.constructor === datatypes.JSObject) {
+                return !!value && value.constructor === datatypes.JSObject;
+            }
             return false;
     }
 };
