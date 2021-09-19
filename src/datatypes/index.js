@@ -37,15 +37,3 @@ module.exports.BSONObjectID = bson.ObjectID;
 module.exports.JSString = String;
 
 module.exports.BSONTimestamp = bson.Timestamp;
-
-module.exports.checkType = (type) => {
-    for (const datatype of Object.values(this).filter(
-        (type) => type.toString() !== this.checkType.toString()
-    )) {
-        // Force types to be equal to datatypes
-        if (type === datatype) {
-            return true;
-        }
-    }
-    return false;
-};
