@@ -2,12 +2,18 @@ const { JSArray, JSObject } = require("../datatypes");
 const Types = require("./Types");
 
 /**
+ * @typedef {object} SchemaOptions
+ * @property {boolean} noUndefined
+ * @property {boolean} noNull
+ */
+
+/**
  * Compare and force an obj to follow the schema rules
  * @template {object} T
  * @template {T} S
  * @param {S} obj
  * @param {T} schema
- * @param {{ noUndefined: boolean, noNull: boolean }} [options]
+ * @param {SchemaOptions} [options]
  * @returns {T}
  */
 module.exports.compare = (obj, schema, options) => {
@@ -38,6 +44,15 @@ module.exports.compare = (obj, schema, options) => {
     return data;
 };
 
+/**
+ * Compare a single value and type
+ * @template {*} T
+ * @template {T} S
+ * @param {S} arr
+ * @param {T} schema
+ * @param {SchemaOptions} [options]
+ * @returns {boolean}
+ */
 module.exports.compareOne = (value, schemaType, options) => {
     options = typeof options === "object" ? options : {};
     function checkInstanceOf(v, s) {
@@ -60,6 +75,15 @@ module.exports.compareOne = (value, schemaType, options) => {
     );
 };
 
+/**
+ * Compare and force an array to follow the schema rules
+ * @template {object} T
+ * @template {T[]} S
+ * @param {S} arr
+ * @param {T} schema
+ * @param {SchemaOptions} [options]
+ * @returns {T[]}
+ */
 module.exports.compareArray = (arr, schemaType, options) => {
     options = typeof options === "object" ? options : {};
     const data = [...arr];
