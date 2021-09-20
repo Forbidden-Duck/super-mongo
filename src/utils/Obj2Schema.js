@@ -3,8 +3,12 @@ const Types = require("./Types");
 
 /**
  * @typedef {object} SchemaOptions
- * @property {boolean} noUndefined
- * @property {boolean} noNull
+ * @property {boolean} [noUndefined]
+ * @property {boolean} [noNull]
+ * @property {object} [strictMode]
+ * @property {boolean} [strictMode.strictType] Throw error when data is of incorrect type (exc. null & undefined)
+ * @property {boolean} [strictMode.strictUndefined] Throw error when data is undefined
+ * @property {boolean} [strictMode.strictNull] Throw error when data is null
  */
 
 /**
@@ -18,9 +22,17 @@ const Types = require("./Types");
  */
 module.exports.compare = (obj, schema, options) => {
     options = typeof options === "object" ? options : {};
+    options.strictMode =
+        typeof options.strictMode === "object" ? options.strictMode : {};
     const data = Object.assign({}, obj);
     for (const [key, value] of Object.entries(data)) {
-        if (!this.compareOne(value, schema[key], options)) delete data[key];
+        if (!this.compareOne(value, schema[key], options)) {
+            if (options.strictMode.strictType) {
+                throw new TypeError(
+                    `obj.${key} is not of type ${schema[key].toString()}`
+                );
+            } else delete data[key];
+        }
     }
     // Add undefined to missing properties if noUndefined is true
     if (!options.noUndefined) {
@@ -28,6 +40,16 @@ module.exports.compare = (obj, schema, options) => {
             (item) => data[item] === undefined
         )) {
             data[key] = undefined;
+        }
+    }
+    // Check for undefined and/or null data
+    if (options.strictMode.strictUndefined || options.strictMode.strictNull) {
+        for (const [key, value] of Object.entries(data)) {
+            if (options.strictMode.strictUndefined && value === undefined) {
+                throw new TypeError(`obj.${key} can not be undefined`);
+            } else if (options.strictMode.strictNull && value === null) {
+                throw new TypeError(`obj.${key} can not be null`);
+            }
         }
     }
     // Run schema compare on inner object and array properties
@@ -58,6 +80,7 @@ module.exports.compareOne = (value, schemaType, options) => {
     function checkInstanceOf(v, s) {
         if (
             !Types.checkType2Primitives(v, JSObject) &&
+            !Types.checkType2Primitives(v, JSArray) &&
             !Types.checkType2Primitives(s, JSObject) &&
             !Types.checkType2Primitives(s, JSArray)
         ) {
@@ -86,19 +109,41 @@ module.exports.compareOne = (value, schemaType, options) => {
  */
 module.exports.compareArray = (arr, schemaType, options) => {
     options = typeof options === "object" ? options : {};
+    options.strictMode =
+        typeof options.strictMode === "object" ? options.strictMode : {};
     const data = [...arr];
     const index2Delete = [];
     data.forEach((value, index) => {
         if (Types.checkType2Primitives(schemaType, JSObject)) {
             if (Types.checkType2Primitives(value, JSObject)) {
                 data[index] = this.compare(value, schemaType, options);
-            } else index2Delete.push(index);
+            } else {
+                if (options.strictMode.strictType) {
+                    throw new TypeError(
+                        `arr[${index}] is not of type ${schemaType}`
+                    );
+                } else index2Delete.push(index);
+            }
         } else if (Types.checkType2Primitives(schemaType, JSArray)) {
             if (Types.checkType2Primitives(value, JSArray)) {
                 data[index] = this.compareArray(value, schemaType[0], options);
-            } else index2Delete.push(index);
+            } else {
+                if (options.strictMode.strictType) {
+                    throw new TypeError(
+                        `arr[${index}] is not of type ${schemaType}`
+                    );
+                } else index2Delete.push(index);
+            }
         } else if (!this.compareOne(value, schemaType, options)) {
-            index2Delete.push(index);
+            if (options.strictMode.strictType) {
+                throw new TypeError(
+                    `arr[${index}] is not of type ${schemaType}`
+                );
+            } else index2Delete.push(index);
+        } else if (options.strictMode.strictUndefined && value === undefined) {
+            throw new TypeError(`arr[${index}] can not be undefined`);
+        } else if (options.strictMode.strictNull && value === null) {
+            throw new TypeError(`arr[${index}] can not be null`);
         }
     });
     return data.filter((value, index) => !index2Delete.includes(index));
