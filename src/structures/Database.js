@@ -1,5 +1,6 @@
 const MongoDB = require("mongodb");
 const Collection = require("./Collection");
+const noDbError = "Database does not exist";
 
 /**
  * Represents a MongoDB Database
@@ -7,45 +8,24 @@ const Collection = require("./Collection");
 module.exports = class Database {
     /**
      *
-     * @param {MongoDB.Db} db
-     * @param {Collection[]} collections
+     * @param {string} name Name of the database
      */
-    constructor(db, collections) {
-        collections = Array.isArray(collections) ? collections : [];
-        collections = collections.filter((coll) => coll instanceof Collection);
-        if (!(db instanceof MongoDB.Db)) {
-            throw new TypeError("db must be instance of MongoDB.Db");
+    constructor(name) {
+        if (typeof name !== "string") {
+            throw new TypeError("name must be a string");
         }
         /**
          * @private
          */
-        this._db = db;
+        this._name = name;
         /**
          * @private
          */
-        this._collections = collections;
+        this._db = null;
         /**
          * @private
          */
-        this._dbInitialized = false;
-        async () => {
-            const listColls = await this.db.collections();
-            this.collections.forEach((coll) => {
-                if (!(coll._coll instanceof MongoDB.Collection)) {
-                    const findColl = listColls.find(
-                        (item) => item.collectionName === coll.name
-                    );
-                    if (findColl) coll._coll = findColl;
-                    else if (coll.options.createIfNotExists)
-                        coll._coll = await this.db.createCollection(
-                            coll.name,
-                            coll.options.collectionOptions
-                        );
-                    else console.warn(`${coll.name} doesn't exist`);
-                }
-            });
-            this._dbInitialized = true;
-        };
+        this._collections = [];
     }
 
     /**
@@ -63,45 +43,43 @@ module.exports = class Database {
     }
 
     /**
-     * Whether not the asynchronous tasks have finished
-     * @returns {boolean}
+     * Initialise the database
+     * @param {MongoDB.Db} db
+     * @param {Collection[]} collections
+     * @returns {Promise<Database>}
      */
-    get dbInitialized() {
-        return this._dbInitialized;
+    async init(db, collections) {
+        collections = Array.isArray(collections) ? collections : [];
+        collections = collections.filter((coll) => coll instanceof Collection);
+        if (!(db instanceof MongoDB.Db)) {
+            throw new TypeError("db must be instance of MongoDB.Db");
+        }
+        this._db = db;
+        const listColls = await this.db.collections();
+        for (const coll of this.collections) {
+            if (!(coll._coll instanceof MongoDB.Collection)) {
+                const findColl = listColls.find(
+                    (item) => item.collectionName === coll.name
+                );
+                if (findColl) coll._coll = findColl;
+                else if (coll.options.createIfNotExists)
+                    coll._coll = await this.db.createCollection(
+                        coll.name,
+                        coll.options.collectionOptions
+                    );
+                else console.warn(`${coll.name} doesn't exist`);
+            }
+        }
+        return this;
     }
 
-    /**
-     * Wait for the database to be initialized
-     * @param {number} [intervalMS=250] How often should it check (default is 250 ms)
-     * @param {number} [timeToWait=10000] How long until it stops (default is 10000 ms)
-     * @returns {Promise<[Database, number]>} Database and time it took to initialize
-     */
-    waitForDB(intervalMS = 250, timeToWait = 10000) {
-        const timeToReady = 0;
-        return new Promise((resolve, reject) => {
-            const intervalID = setInterval(() => {
-                timeToReady += intervalMS;
-                if (this.dbInitialized === true) {
-                    clearInterval(intervalID);
-                    resolve([this, timeToReady]);
-                } else if (timeToReady >= timeToWait) {
-                    reject(
-                        new Error(
-                            `Failed to initialize the database after ${
-                                timeToReady / 1000
-                            } seconds`
-                        )
-                    );
-                }
-            }, intervalMS);
-        });
-    }
     /**
      * Returns a reference to a Collection
      * @param {string} collName
      * @returns {Collection}
      */
     collection(collName) {
+        if (!this._db) throw new TypeError(noDbError);
         return this.collections.find((coll) => coll.name === collName);
     }
 
@@ -111,6 +89,7 @@ module.exports = class Database {
      * @returns {Promise<Collecion[]> | Collection[]}
      */
     async addCollection(coll) {
+        if (!this._db) throw new TypeError(noDbError);
         if (!(coll instanceof Collection)) {
             throw new TypeError("coll is not an instance of Collection");
         }
@@ -138,6 +117,7 @@ module.exports = class Database {
      * @returns {Promise<boolean>}
      */
     removeCollection(coll, options) {
+        if (!this._db) throw new TypeError(noDbError);
         let collName = coll;
         if (coll instanceof Collection) {
             collName = coll.name;
@@ -157,6 +137,7 @@ module.exports = class Database {
      * @returns {Promise<MongoDB.Collection<MongoDB.Document>>}
      */
     renameCollection(collName, newCollName, options) {
+        if (!this._db) throw new TypeError(noDbError);
         const collection = this.collection(collName);
         if (!collName) throw new TypeError(`${collName} does not exist`);
         return collection.rename(newCollName, options);
