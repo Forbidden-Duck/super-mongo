@@ -22,27 +22,41 @@ const { Obj2Schema } = require("../utils");
  * @returns {T}
  */
 module.exports.UpdateFilter = (update, schema, options) => {
-    update.$addToSet = Obj2Schema.compare(update.$addToSet, schema, {
-        noUndefined: true,
-    });
-    update.$setOnInsert = Obj2Schema.compare(update.$setOnInsert, schema, {
-        noUndefined: true,
-    });
-    update.$set = Obj2Schema.compare(update.$set, schema, {
-        noUndefined: true,
-    });
-    for (const [key, value] of Object.entries(update.$push)) {
-        const schemaType = Array.isArray(schema[key])
-            ? schema[key][0]
-            : schema[key];
-        if (value.$each) {
-            update.$push[key].$each = Obj2Schema.compareArray(
-                update.$push[key].$each,
-                schemaType,
-                options
-            );
-        } else if (!Obj2Schema.compareOne(value, schemaType, options)) {
-            delete update.$push[key];
+    if (typeof update.$addToSet === "object") {
+        update.$addToSet = Obj2Schema.compare(
+            update.$addToSet,
+            schema,
+            Object.assign(options, { noUndefined: true })
+        );
+    }
+    if (typeof update.$setOnInsert === "object") {
+        update.$setOnInsert = Obj2Schema.compare(
+            update.$setOnInsert,
+            schema,
+            Object.assign(options, { noUndefined: true })
+        );
+    }
+    if (typeof update.$set === "object") {
+        update.$set = Obj2Schema.compare(
+            update.$set,
+            schema,
+            Object.assign(options, { noUndefined: true })
+        );
+    }
+    if (typeof update.$push === "object") {
+        for (const [key, value] of Object.entries(update.$push)) {
+            const schemaType = Array.isArray(schema[key])
+                ? schema[key][0]
+                : schema[key];
+            if (value.$each) {
+                update.$push[key].$each = Obj2Schema.compareArray(
+                    update.$push[key].$each,
+                    schemaType,
+                    options
+                );
+            } else if (!Obj2Schema.compareOne(value, schemaType, options)) {
+                delete update.$push[key];
+            }
         }
     }
     return update;
