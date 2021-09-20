@@ -57,7 +57,7 @@ module.exports = class Collection {
             }
         }
         if (coll && !(coll instanceof MongoDB.Collection)) {
-            throw new TypeError("coll must be a MongoDB Collection instance");
+            throw new TypeError("coll must be a MongoDB.Collection instance");
         } else if (coll instanceof MongoDB.Collection) {
             name = coll.collectionName;
         }
