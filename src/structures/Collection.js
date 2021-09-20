@@ -131,8 +131,6 @@ module.exports = class Collection {
         return this._coll.aggregate(pipeline, options).toArray();
     }
 
-    // TODO bulkWrite
-
     /**
      * Creates an index on the db and collection.
      * @param {MongoDB.IndexSpecification} spec
