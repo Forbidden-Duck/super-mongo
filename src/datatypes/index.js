@@ -1,5 +1,7 @@
 const bson = require("bson");
 
+module.exports.Ignore = true; // Used to ignore important fields (i.e. _id)
+
 module.exports.JSArray = Array;
 
 module.exports.BSONRegExp = bson.BSONRegExp;

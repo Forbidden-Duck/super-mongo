@@ -1,4 +1,4 @@
-const { JSArray, JSObject } = require("../datatypes");
+const { Ignore, JSArray, JSObject } = require("../datatypes");
 const Types = require("./Types");
 
 /**
@@ -34,19 +34,21 @@ module.exports.compare = (obj, schema, options) => {
     }
     // Add undefined to missing properties if noUndefined is true
     if (!options.noUndefined) {
-        for (const key of Object.keys(schema).filter(
-            (item) => data[item] === undefined
+        for (const [key, value] of Object.entries(schema).filter(
+            ([k]) => data[k] === undefined
         )) {
-            data[key] = undefined;
+            if (value !== Ignore) data[key] = undefined;
         }
     }
     // Check for undefined and/or null data
     if (options.strictMode.strictUndefined || options.strictMode.strictNull) {
         for (const [key, value] of Object.entries(data)) {
-            if (options.strictMode.strictUndefined && value === undefined) {
-                throw new TypeError(`obj.${key} can not be undefined`);
-            } else if (options.strictMode.strictNull && value === null) {
-                throw new TypeError(`obj.${key} can not be null`);
+            if (schema[key] !== Ignore) {
+                if (options.strictMode.strictUndefined && value === undefined) {
+                    throw new TypeError(`obj.${key} can not be undefined`);
+                } else if (options.strictMode.strictNull && value === null) {
+                    throw new TypeError(`obj.${key} can not be null`);
+                }
             }
         }
     }
@@ -80,7 +82,8 @@ module.exports.compareOne = (value, schemaType, options) => {
             !Types.checkType2Primitives(v, JSObject) &&
             !Types.checkType2Primitives(v, JSArray) &&
             !Types.checkType2Primitives(s, JSObject) &&
-            !Types.checkType2Primitives(s, JSArray)
+            !Types.checkType2Primitives(s, JSArray) &&
+            s !== Ignore
         ) {
             return v instanceof s;
         }

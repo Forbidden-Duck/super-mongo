@@ -10,6 +10,8 @@ module.exports.checkType = (type) => {
 
 module.exports.checkType2Primitives = (value, type) => {
     switch (type) {
+        case true:
+            return true;
         case datatypes.JSArray:
             return datatypes.JSArray.isArray(value);
         case datatypes.JSBoolean:
