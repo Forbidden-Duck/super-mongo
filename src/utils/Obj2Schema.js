@@ -5,6 +5,7 @@ const Types = require("./Types");
  * @typedef {object} SchemaOptions
  * @property {boolean} [noUndefined]
  * @property {boolean} [noNull]
+ * @property {boolean} [keepType] Does not replace invalid types with undefined
  * @property {object} [strictMode]
  * @property {boolean} [strictMode.strictType] Throw error when data is of incorrect type (exc. null & undefined)
  * @property {boolean} [strictMode.strictUndefined] Throw error when data is undefined
@@ -25,11 +26,15 @@ module.exports.compare = (obj, schema, options) => {
     options.strictMode =
         typeof options.strictMode === "object" ? options.strictMode : {};
     const data = Object.assign({}, obj);
-    for (const [key, value] of Object.entries(data)) {
-        if (!this.compareOne(value, schema[key], options)) {
-            if (options.strictMode.strictType) {
-                throw new TypeError(`obj.${key} is not of type ${schema[key]}`);
-            } else delete data[key];
+    if (!options.keepType) {
+        for (const [key, value] of Object.entries(data)) {
+            if (!this.compareOne(value, schema[key], options)) {
+                if (options.strictMode.strictType) {
+                    throw new TypeError(
+                        `obj.${key} is not of type ${schema[key]}`
+                    );
+                } else delete data[key];
+            }
         }
     }
     // Add undefined to missing properties if noUndefined is true
@@ -88,6 +93,12 @@ module.exports.compareOne = (value, schemaType, options) => {
             return v instanceof s;
         }
         return false;
+    }
+    if (options.keepType) {
+        return !(
+            (value === undefined && options.noUndefined) ||
+            (value === null && options.noNull)
+        );
     }
     return !(
         !schemaType ||
