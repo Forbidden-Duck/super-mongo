@@ -28,9 +28,7 @@ module.exports.compare = (obj, schema, options) => {
     for (const [key, value] of Object.entries(data)) {
         if (!this.compareOne(value, schema[key], options)) {
             if (options.strictMode.strictType) {
-                throw new TypeError(
-                    `obj.${key} is not of type ${schema[key].toString()}`
-                );
+                throw new TypeError(`obj.${key} is not of type ${schema[key]}`);
             } else delete data[key];
         }
     }
