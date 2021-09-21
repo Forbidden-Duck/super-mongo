@@ -105,7 +105,7 @@ module.exports = class MongoClient {
         ).connect();
         const temp = [];
         for (const database of databases) {
-            temp.push(this.db(database));
+            temp.push(await this.db(database));
         }
         this._databases = temp;
         return this;
@@ -114,7 +114,7 @@ module.exports = class MongoClient {
     /**
      * Create a new Db instance sharing the current socket connections.
      * @param {Database} db
-     * @returns {Database}
+     * @returns {Promise<Database>}
      */
     db(db) {
         if (!this._client) throw new TypeError(noClientError);
