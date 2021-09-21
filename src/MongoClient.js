@@ -118,6 +118,16 @@ module.exports = class MongoClient {
     }
 
     /**
+     * Returns a reference to a Database
+     * @param {string} dbName
+     * @returns {Database}
+     */
+    database(dbName) {
+        if (!this._client) throw new TypeError(noClientError);
+        return this.databases.find((db) => db.name === dbName);
+    }
+
+    /**
      * Create a new Db instance sharing the current socket connections.
      * @param {Database} db
      * @returns {Promise<Database>}
