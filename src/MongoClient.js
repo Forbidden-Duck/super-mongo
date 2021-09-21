@@ -108,6 +108,7 @@ module.exports = class MongoClient {
             temp.push(this.db(database));
         }
         this._databases = temp;
+        return this;
     }
 
     /**
