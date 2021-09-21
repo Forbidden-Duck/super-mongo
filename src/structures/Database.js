@@ -10,13 +10,15 @@ module.exports = class Database {
      *
      * @param {string} name Name of the database
      * @param {Collection[]} collections
+     * @param {MongoDB.DbOptions} [dbOptions]
      */
-    constructor(name, collections) {
+    constructor(name, collections, dbOptions) {
         if (typeof name !== "string") {
             throw new TypeError("name must be a string");
         }
         collections = Array.isArray(collections) ? collections : [];
         collections = collections.filter((coll) => coll instanceof Collection);
+        dbOptions = typeof dbOptions === "object" ? dbOptions : {};
 
         /**
          * @private
@@ -30,6 +32,10 @@ module.exports = class Database {
          * @private
          */
         this._collections = collections;
+        /**
+         * @private
+         */
+        this._dbOptions = dbOptions;
     }
 
     /**
@@ -51,6 +57,13 @@ module.exports = class Database {
      */
     get collections() {
         return [...this._collections];
+    }
+
+    /**
+     * @returns {MongoDB.DbOptions}
+     */
+    get dbOptions() {
+        return { ...this._dbOptions };
     }
 
     /**
@@ -80,6 +93,17 @@ module.exports = class Database {
             }
         }
         return this;
+    }
+
+    /**
+     * @private
+     */
+    close() {
+        if (!this._db) throw new TypeError(noDbError);
+        this._db = null;
+        this._collections.forEach((coll) => {
+            coll.close();
+        });
     }
 
     /**
