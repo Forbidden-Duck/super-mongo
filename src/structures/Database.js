@@ -151,8 +151,8 @@ module.exports = class Database {
     removeCollection(collName, options) {
         if (!this._db) throw new TypeError(noDbError);
         if (collName instanceof Collection) {
-            collName = coll.name;
-        } else if (typeof coll !== "string") {
+            collName = collName.name;
+        } else if (typeof collName !== "string") {
             throw new TypeError(
                 "coll must be a string or an instance of Collection"
             );
