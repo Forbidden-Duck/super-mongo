@@ -1,7 +1,7 @@
 const MongoDB = require("mongodb");
 const datatypes = require("../datatypes");
 const utils = require("../utils");
-const noCollError = "Collection does not exist";
+const noCollError = "Collection has not been initialized";
 
 /**
  * @typedef {object} Options
