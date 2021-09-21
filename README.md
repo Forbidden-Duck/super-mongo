@@ -35,7 +35,7 @@ I worked tirelessly to get the typings to be as intuitive as possible while not 
 
 ### Connection Settings
 
-You can use a plain string (i.e. `mongodb://username:password@address:port/host`), however, you can use an object
+You can use a plain string (i.e. `mongodb://username:password@address:port/host`), or, you can use an object
 
 ```ts
 {
