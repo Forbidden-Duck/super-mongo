@@ -158,6 +158,9 @@ module.exports = class Database {
                 "coll must be a string or an instance of Collection"
             );
         }
+        this._collections = this._collections.filter(
+            (c) => c.name === collName
+        );
         return this.db.dropCollection(collName, options);
     }
 

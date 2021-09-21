@@ -194,9 +194,11 @@ module.exports = class Collection {
      * @param {MongoDB.CommandOperationOptions} [options]
      * @returns {Promise<boolean>}
      */
-    drop(options) {
+    async drop(options) {
         if (!this._coll) throw new TypeError(noCollError);
-        return this._coll.drop(options);
+        const res = await this._coll.drop(options);
+        if (res) this._coll = null;
+        return res;
     }
 
     /**
