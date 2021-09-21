@@ -121,6 +121,14 @@ module.exports = class Collection {
     }
 
     /**
+     * @private
+     */
+    close() {
+        if (!this._coll) throw new TypeError(noCollError);
+        this._coll = null;
+    }
+
+    /**
      * Execute an aggregation framework pipeline against the collection, needs MongoDB >= 2.2
      * @param {MongoDB.Document[]} pipeline
      * @param {MongoDB.AggregateOptions} [options]
