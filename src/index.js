@@ -4,12 +4,11 @@ const MongoClient = require("./MongoClient");
 /**
  *
  * @param {ClientConnection | string} connection
- * @param {MongoDB.MongoClientOptions} clientOptions
  * @param {Database[]} dbs
- * @returns {MongoClient}
+ * @param {MongoDB.MongoClientOptions} [clientOptions]
  */
-function SuperMongo(connection, clientOptions, dbs) {
-    return new MongoClient(connection, clientOptions, dbs);
+function SuperMongo(connection, dbs, clientOptions) {
+    return new MongoClient(connection, dbs, clientOptions);
 }
 
 SuperMongo.MongoClient = MongoClient;

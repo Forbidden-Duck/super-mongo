@@ -17,10 +17,10 @@ module.exports = class MongoClient {
     /**
      *
      * @param {ClientConnection | string} connection
-     * @param {MongoDB.MongoClientOptions} clientOptions
      * @param {Database[]} dbs
+     * @param {MongoDB.MongoClientOptions} [clientOptions]
      */
-    constructor(connection, clientOptions, dbs) {
+    constructor(connection, dbs, clientOptions) {
         if (typeof connection === "object") {
             temp = "mongodb://";
             if (connection.username && connection.password) {
