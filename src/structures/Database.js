@@ -144,24 +144,24 @@ module.exports = class Database {
 
     /**
      * Remove a collection from the database
-     * @param {Collection | string} collName Runs dropCollection as well
-     * @param {MongoDB.CommandOperationOptions} options
+     * @param {Collection | string} collName
+     * @param {MongoDB.CommandOperationOptions} [options]
      * @returns {Promise<boolean>}
      */
-    removeCollection(coll, options) {
+    removeCollection(collName, options) {
         if (!this._db) throw new TypeError(noDbError);
-        let collName = coll;
-        if (coll instanceof Collection) {
+        if (collName instanceof Collection) {
             collName = coll.name;
         } else if (typeof coll !== "string") {
             throw new TypeError(
                 "coll must be a string or an instance of Collection"
             );
         }
-        this._collections = this._collections.filter(
-            (c) => c.name === collName
-        );
-        return this.db.dropCollection(collName, options);
+        const coll = this._collections.find((c) => c.name === collName);
+        if (coll instanceof Collection) {
+            return coll.drop(options);
+        }
+        return false;
     }
 
     /**
