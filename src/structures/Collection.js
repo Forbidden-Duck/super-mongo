@@ -23,12 +23,7 @@ const noCollError = "Collection has not been initialized";
 
 /**
  * Represents a MongoDB Collection
- * @template {Object<string, datatypes.Ignore | datatypes.JSArray | datatypes.BSONRegExp | datatypes.BSONSymbol
- * | datatypes.BSONBinary | datatypes.BSONBinary | Boolean | datatypes.BSONCode
- * | Date | datatypes.BSONDecimal128 | datatypes.BSONDouble | datatypes.BSONInt32
- * | Number | datatypes.BSONLong | datatypes.BSONMaxKey | datatypes.BSONMinKey | null
- * | Object | datatypes.JSObject |datatypes.BSONObjectID | String | datatypes.BSONTimestamp
- * | undefined>} S
+ * @template {Object<string, unknown>} S
  */
 module.exports = class Collection {
     /**

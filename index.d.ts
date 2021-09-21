@@ -262,7 +262,7 @@ declare namespace SuperMongo {
     /**
      * Represents a MongoDB Collection
      */
-    export class Collection<S extends { [key: string]: SuperMongo.DataTypes }> {
+    export class Collection<S extends { [key: string]: unknown }> {
         private _tempName: string;
         private _options: SuperMongo.CollectionOptions;
         private _schema: S;
