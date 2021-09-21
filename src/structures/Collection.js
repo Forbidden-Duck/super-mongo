@@ -67,6 +67,10 @@ module.exports = class Collection {
 
         /**
          * @private
+         */
+        this._tempName = name;
+        /**
+         * @private
          * @type {Options}
          */
         this._options = options;
@@ -86,7 +90,7 @@ module.exports = class Collection {
      * @returns {string}
      */
     get name() {
-        if (!this._coll) throw new TypeError(noCollError);
+        if (!this._coll) return this._tempName;
         return this._coll.collectionName;
     }
 
