@@ -1,6 +1,6 @@
 const MongoDB = require("mongodb");
 const Collection = require("./Collection");
-const noDbError = "Database does not exist";
+const noDbError = "Database has not been initialized";
 
 /**
  * Represents a MongoDB Database
@@ -9,11 +9,15 @@ module.exports = class Database {
     /**
      *
      * @param {string} name Name of the database
+     * @param {Collection[]} collections
      */
-    constructor(name) {
+    constructor(name, collections) {
         if (typeof name !== "string") {
             throw new TypeError("name must be a string");
         }
+        collections = Array.isArray(collections) ? collections : [];
+        collections = collections.filter((coll) => coll instanceof Collection);
+
         /**
          * @private
          */
@@ -25,7 +29,7 @@ module.exports = class Database {
         /**
          * @private
          */
-        this._collections = [];
+        this._collections = collections;
     }
 
     /**
@@ -52,19 +56,16 @@ module.exports = class Database {
     /**
      * Initialise the database
      * @param {MongoDB.Db} db
-     * @param {Collection[]} collections
      * @returns {Promise<Database>}
      */
-    async init(db, collections) {
-        collections = Array.isArray(collections) ? collections : [];
-        collections = collections.filter((coll) => coll instanceof Collection);
+    async init(db) {
         if (!(db instanceof MongoDB.Db)) {
             throw new TypeError("db must be instance of MongoDB.Db");
         }
         this._db = db;
         this._name = db.databaseName;
         const listColls = await this.db.collections();
-        for (const coll of this.collections) {
+        for (const coll of this._collections) {
             if (!(coll._coll instanceof MongoDB.Collection)) {
                 const findColl = listColls.find(
                     (item) => item.collectionName === coll.name
