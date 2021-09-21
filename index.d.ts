@@ -191,10 +191,15 @@ declare namespace SuperMongo {
          */
         connect(): Promise<MongoClient>;
         /**
+         * Returns a reference to a Database
+         * @param dbName
+         */
+        database(dbName: string): SuperMongo.Database;
+        /**
          * Create a new Db instance sharing the current socket connections.
          * @param db
          */
-        db(db: SuperMongo.Database): SuperMongo.Database;
+        db(db: SuperMongo.Database): Promise<SuperMongo.Database>;
     }
 
     /**
