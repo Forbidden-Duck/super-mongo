@@ -24,7 +24,7 @@ const noCollError = "Collection does not exist";
 /**
  * Represents a MongoDB Collection
  * @template {string} K
- * @template {datatypes.JSArray | datatypes.BSONRegExp | datatypes.BSONSymbol
+ * @template {datatypes.Ignore | datatypes.JSArray | datatypes.BSONRegExp | datatypes.BSONSymbol
  * | datatypes.BSONBinary | datatypes.BSONBinary | Boolean | datatypes.BSONCode
  * | Date | datatypes.BSONDecimal128 | datatypes.BSONDouble | datatypes.BSONInt32
  * | Number | datatypes.BSONLong | datatypes.BSONMaxKey | datatypes.BSONMinKey | null
