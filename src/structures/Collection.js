@@ -123,6 +123,13 @@ module.exports = class Collection {
     }
 
     /**
+     * @returns {MongoDB.Collection}
+     */
+    get coll() {
+        return this._coll;
+    }
+
+    /**
      * @private
      */
     close() {
@@ -231,7 +238,7 @@ module.exports = class Collection {
     }
 
     /**
-     * Fetches the first document that matches the filter
+     * Fetches the first document that matches the filter and deletes it
      * @param {MongoDB.Filter<S>} [filter]
      * @param {MongoDB.FindOneAndDeleteOptions} [options]
      * @returns {Promise<MongoDB.ModifyResult<S>>}
@@ -242,7 +249,7 @@ module.exports = class Collection {
     }
 
     /**
-     * Fetches the first document that matches the filter
+     * Fetches the first document that matches the filter and replaces it
      * @param {S} replacement
      * @param {MongoDB.Filter<S>} [filter]
      * @param {MongoDB.FindOneAndReplaceOptions} [options]
@@ -325,10 +332,10 @@ module.exports = class Collection {
     }
 
     /**
-     * Inserts an array of documents into MongoDB. If documents passed in do not contain the _id field, one will be added to each of the documents missing it by the driver, mutating the document. This behavior can be overridden by setting the forceServerObjectId flag.
+     * Inserts a document into MongoDB. If the document passed in does not contain the _id field, one will be added missing it by the driver, mutating the document. This behavior can be overridden by setting the forceServerObjectId flag.
      * @param {S} insert
-     * @param {MongoDB.InsertOneOptions} options
-     * @param {SchemaOptions} schemaOptions
+     * @param {MongoDB.InsertOneOptions} [options]
+     * @param {SchemaOptions} [schemaOptions]
      * @returns {Promise<MongoDB.InsertOneResult>}
      */
     insertOne(insert, options, schemaOptions) {
@@ -346,7 +353,7 @@ module.exports = class Collection {
 
     /**
      * Returns if the collection is a capped collection
-     * @param {MongoDB.OperationOptions} options
+     * @param {MongoDB.OperationOptions} [options]
      * @returns {Promise<boolean>}
      */
     isCapped(options) {
@@ -357,7 +364,7 @@ module.exports = class Collection {
     /**
      * Rename the collection.
      * @param {string} name
-     * @param {MongoDB.RenameOptions} options
+     * @param {MongoDB.RenameOptions} [options]
      * @returns {Promise<Collection>}
      */
     async rename(name, options) {
@@ -391,7 +398,7 @@ module.exports = class Collection {
 
     /**
      * Get all the collection statistics.
-     * @param {MongoDB.CollStatsOptions} options
+     * @param {MongoDB.CollStatsOptions} [options]
      * @returns {Promise<MongoDB.CollStats>}
      */
     stats(options) {
@@ -411,7 +418,7 @@ module.exports = class Collection {
     }
 
     /**
-     * Find a document and update it in one atomic operation. Requires a write lock for the duration of the operation.
+     * Find many documents and update them in one atomic operation. Requires a write lock for the duration of the operation.
      * @param {MongoDB.UpdateFilter<S>} update
      * @param {MongoDB.Filter<S>} [filter]
      * @param {MongoDB.UpdateOptions} [options]
