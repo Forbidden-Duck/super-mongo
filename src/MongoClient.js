@@ -123,7 +123,6 @@ module.exports = class MongoClient {
      * @returns {Database}
      */
     database(dbName) {
-        if (!this._client) throw new TypeError(noClientError);
         return this.databases.find((db) => db.name === dbName);
     }
 

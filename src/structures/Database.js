@@ -112,7 +112,6 @@ module.exports = class Database {
      * @returns {Collection}
      */
     collection(collName) {
-        if (!this._db) throw new TypeError(noDbError);
         return this.collections.find((coll) => coll.name === collName);
     }
 
