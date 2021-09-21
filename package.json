@@ -1,42 +1,42 @@
 {
-  "name": "super-mongo",
-  "version": "1.0.0",
-  "description": "Simple MongoDB Wrapper",
-  "main": "./index.js",
-  "types": "./index.d.ts",
-  "scripts": {
-    "test": "node test/test.js"
-  },
-  "keywords": [
-    "mongodb",
-    "mongo",
-    "db",
-    "database",
-    "schema",
-    "validation",
-    "data",
-    "nosql",
-    "sequel",
-    "no",
-    "sql",
-    "query"
-  ],
-  "author": "Harrison Howard (Forbidden-Duck)",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Forbidden-Duck/super-mongo.git"
-  },
-  "homepage": "https://github.com/Forbidden-Duck/super-mongo",
-  "dependencies": {
-    "bson": "^4.5.2",
-    "crypto-js": "^4.1.1",
-    "moment": "^2.29.1",
-    "mongodb": "^4.1.2"
-  },
-  "devDependencies": {
-    "@types/crypto-js": "^4.0.2",
-    "@types/mongodb": "^4.0.7",
-    "dotenv": "^10.0.0"
-  }
+    "name": "@forbidden_duck/super-mongo",
+    "version": "1.0.1",
+    "description": "Simple MongoDB Wrapper",
+    "main": "./index.js",
+    "types": "./index.d.ts",
+    "scripts": {
+        "test": "node test/test.js"
+    },
+    "keywords": [
+        "mongodb",
+        "mongo",
+        "db",
+        "database",
+        "schema",
+        "validation",
+        "data",
+        "nosql",
+        "sequel",
+        "no",
+        "sql",
+        "query"
+    ],
+    "author": "Harrison Howard (Forbidden-Duck)",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Forbidden-Duck/super-mongo.git"
+    },
+    "homepage": "https://github.com/Forbidden-Duck/super-mongo",
+    "dependencies": {
+        "bson": "^4.5.2",
+        "crypto-js": "^4.1.1",
+        "moment": "^2.29.1",
+        "mongodb": "^4.1.2"
+    },
+    "devDependencies": {
+        "@types/crypto-js": "^4.0.2",
+        "@types/mongodb": "^4.0.7",
+        "dotenv": "^10.0.0"
+    }
 }

@@ -5,11 +5,11 @@ Read [Github](https://github.com/Forbidden-Duck/super-mongo) README, in case of 
 A custom [MongoDB](https://www.mongodb.com/) interface that has a schema interpreter. Written in JavaScipt with TypeScript support.
 
 ```
-npm install super-mongo
+npm install @forbidden_duck/super-mongo
 ```
 
-[![NPM Version](https://badgen.net/npm/v/super-mongo)](https://www.npmjs.com/package/super-mongo)
-[![NPM Downloads](https://badgen.net/npm/dm/super-mongo)](https://www.npmjs.com/package/super-mongo)
+[![NPM Version](https://badgen.net/npm/v/@forbidden_duck/super-mongo)](https://www.npmjs.com/package/@forbidden_duck/super-mongo)
+[![NPM Downloads](https://badgen.net/npm/dm/@forbidden_duck/super-mongo)](https://www.npmjs.com/package/@forbidden_duck/super-mongo)
 
 ## **Features**
 
@@ -51,7 +51,7 @@ You can use a plain string (i.e. `mongodb://username:password@address:port/host`
 All a collection needs is it's name, schema and options. If you want more specific control the 4th parameter accepts a `MongoDB.Collection` which will immediately connect the collection.
 
 ```js
-const SuperMongo = require("super-mongo");
+const SuperMongo = require("@forbidden_duck/super-mongo");
 const myUserCollection = new SuperMongo.Collection(
     "users",
     {
@@ -77,7 +77,7 @@ const myUserCollection = new SuperMongo.Collection(
 Database takes nothing but a name, an array of collections and dbOptions (if you need it)
 
 ```js
-const SuperMongo = require("super-mongo");
+const SuperMongo = require("@forbidden_duck/super-mongo");
 const myWebsiteDatabase = new SuperMongo.Database("mywebsitedb", [
     myUserCollection,
     myProductCollection,
@@ -90,7 +90,7 @@ const myWebsiteDatabase = new SuperMongo.Database("mywebsitedb", [
 Now you need to put your connecting settings and array of databases into the MongoClient
 
 ```js
-const SuperMongo = require("super-mongo");
+const SuperMongo = require("@forbidden_duck/super-mongo");
 const MongoClient = await new SuperMongo.MongoClient(connectionSettings, [
     myWebsiteDatabase,
     myBusinessNameWebsite,
