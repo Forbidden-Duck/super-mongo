@@ -29,6 +29,13 @@ module.exports = class Database {
     }
 
     /**
+     * @returns {string}
+     */
+    get name() {
+        return this._name;
+    }
+
+    /**
      * @returns {MongoDB.Db}
      */
     get db() {
@@ -55,6 +62,7 @@ module.exports = class Database {
             throw new TypeError("db must be instance of MongoDB.Db");
         }
         this._db = db;
+        this._name = db.databaseName;
         const listColls = await this.db.collections();
         for (const coll of this.collections) {
             if (!(coll._coll instanceof MongoDB.Collection)) {
