@@ -17,7 +17,7 @@ const cryptojs = require("crypto-js");
 /**
  * Create a new Salt+Hash
  * @param {string} str
- * @param {KDFOption} cfg
+ * @param {KDFOption} [cfg]
  * @returns {string}
  */
 module.exports.create = (str, cfg) => {
@@ -29,10 +29,10 @@ module.exports.create = (str, cfg) => {
 };
 
 /**
- * Compare a hash salt
+ * Compare a Salt+Hash
  * @param {string} str
  * @param {string} salthash
- * @param {KDFOption} cfg
+ * @param {KDFOption} [cfg]
  * @returns {boolean}
  */
 module.exports.compare = (str, salthash, cfg) => {
