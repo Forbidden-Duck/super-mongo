@@ -4,6 +4,9 @@
   "description": "Simple MongoDB Wrapper",
   "main": "./index.js",
   "types": "./index.d.ts",
+  "scripts": {
+    "test": "node test/test.js"
+  },
   "keywords": [
     "mongodb",
     "mongo",
