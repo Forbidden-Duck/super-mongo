@@ -59,7 +59,10 @@ module.exports.compare = (obj, schema, options) => {
     }
     // Run schema compare on inner object and array properties
     for (const [key, value] of Object.entries(data)) {
-        if (Types.checkType2Primitives(value, JSObject)) {
+        if (
+            Types.checkType2Primitives(value, JSObject) &&
+            Types.checkType2Primitives(schema[key], JSObject)
+        ) {
             data[key] = this.compare(value, schema[key], options);
         } else if (
             Types.checkType2Primitives(value, JSArray) &&
