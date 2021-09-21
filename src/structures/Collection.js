@@ -38,7 +38,7 @@ module.exports = class Collection {
      * @param {Options} [options]
      * @param {MongoDB.Collection} [coll]
      */
-    constructor(name, schema, schema, coll) {
+    constructor(name, schema, options, coll) {
         options = typeof options === "object" ? options : {};
         options.defaultSchemaOptions =
             typeof options.defaultSchemaOptions === "object"
