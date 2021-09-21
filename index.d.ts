@@ -427,7 +427,7 @@ declare namespace SuperMongo {
          * @param options
          * @param schemaOptions
          */
-        insertMany(
+        insertOne(
             insert: S,
             options?: MongoDB.InsertOneOptions,
             schemaOptions?: SuperMongo.SchemaOptions
