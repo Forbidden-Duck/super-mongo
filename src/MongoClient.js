@@ -22,7 +22,7 @@ module.exports = class MongoClient {
      */
     constructor(connection, dbs, clientOptions) {
         if (typeof connection === "object") {
-            temp = "mongodb://";
+            let temp = "mongodb://";
             if (connection.username && connection.password) {
                 temp += `${connection.username}:${connection.password}@`;
             }
@@ -30,6 +30,7 @@ module.exports = class MongoClient {
             if (connection.host) {
                 temp += connection.host;
             }
+            connection = temp;
         }
         /**
          * @private
@@ -104,11 +105,6 @@ module.exports = class MongoClient {
         ).connect();
         const temp = [];
         for (const database of databases) {
-            if (database.db instanceof MongoDB.Db) {
-                throw new TypeError(
-                    `${database.name} has already been initialized`
-                );
-            }
             temp.push(this.db(database));
         }
         this._databases = temp;
