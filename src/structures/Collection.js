@@ -5,7 +5,7 @@ const noCollError = "Collection has not been initialized";
 
 /**
  * @typedef {object} Options
- * @property {boolean} [createIfNotExists] creates the collection if it doesn't exist
+ * @property {boolean} [createIfNotExist] creates the collection if it doesn't exist
  * @property {MongoDB.CreateCollectionOptions} [collectionOptions] options applied to collection if it doesn't exist
  * @property {SchemaOptions} [defaultSchemaOptions] options to be applied directly to every available SchemaOption
  */
