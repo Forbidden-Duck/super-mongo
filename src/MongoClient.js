@@ -102,7 +102,13 @@ module.exports = class MongoClient {
         this._client = await new MongoDB.MongoClient(
             this._connectionURL,
             this._clientOptions
-        ).connect();
+        )
+            .connect()
+            .catch((err) => {
+                if (err.message === "Authentication failed.") {
+                    throw new Error("Failed to authenticate with the Database");
+                } else throw err;
+            });
         const temp = [];
         for (const database of databases) {
             temp.push(await this.db(database));
