@@ -167,7 +167,7 @@ module.exports = class Database {
      * @param {string} collName
      * @param {string} newCollName
      * @param {MongoDB.RenameOptions} options
-     * @returns {Promise<MongoDB.Collection<MongoDB.Document>>}
+     * @returns {Promise<Collection>}
      */
     renameCollection(collName, newCollName, options) {
         if (!this._db) throw new TypeError(noDbError);

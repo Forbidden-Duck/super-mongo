@@ -360,13 +360,13 @@ module.exports = class Collection {
      * Rename the collection.
      * @param {string} name
      * @param {MongoDB.RenameOptions} options
-     * @returns {Promise<MongoDB.Collection<MongoDB.Document>>}
+     * @returns {Promise<Collection>}
      */
     async rename(name, options) {
         if (!this._coll) throw new TypeError(noCollError);
         const res = await this._coll.rename(name, options);
         this._coll = res;
-        return res;
+        return this;
     }
 
     /**
