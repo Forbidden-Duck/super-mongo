@@ -132,7 +132,7 @@ module.exports = class Database {
                 (item) => item.collectionName === coll.name
             );
             if (findColl) coll._coll = findColl;
-            else if (coll.options.createIfNotExists)
+            else if (coll.options.createIfNotExist)
                 coll._coll = await this.db.createCollection(
                     coll.name,
                     coll.options.collectionOptions
